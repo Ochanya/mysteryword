@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Word Game </title>
+  </head>
+  <body>
+    <h1>Mystery Word Game</h1>
+    <div class="">
+      <form class="" action="/" method="post">
+        <input type="text" name="guessInput" value="" placeholder="Enter a Letter">
+        <button type="submit" name="button">Guess</button>
+      </form>
+      <p class="errormsg">
+        {{errorMsg}}
+      </p>
+      {{#currentWord}}
+      <p class="">
+        {{currentWord}}
+      </p>
+      {{/currentWord}}
+      <p class="wrong-choice">
+        {{wrongChoice}}
+      </p>
+      {{#correctedWord}}
+      <span class="correct-display">
+        {{.}}
+      </span>
+      {{/correctedWord}}
+      <p >
+        You have <span class="chances"> {{chances}}</span> chances left.
+      </p>
+    <div class="guessed">
+      Letters Guessed:
+    </div>
+      {{#letters}}
+      <span class="correct-display">
+        {{.}}
+      </span>
+      {{/letters}}
+      <!-- <div class="">
+        {{correctWord}}
+      </div> -->
+
+    </div>
+
+  </body>
+</html>
