@@ -39,9 +39,19 @@
         {{.}}
       </span>
       {{/letters}}
-      <!-- <div class="">
-        {{correctWord}}
-      </div> -->
+      {{#correctWord}}
+      <div class="guessed">
+        The word is <span class="chances ">{{correctWord}}</span>
+      </div>
+      <form class="guessed" action="/tryagain" method="post">
+        <button type="submit" name="button" value="">TRY AGAIN!</button>
+      </form>
+      {{/correctWord}}
+      {{^correctWord}}
+      <div class="">
+
+      </div>
+      {{/correctWord}}
 
     </div>
 

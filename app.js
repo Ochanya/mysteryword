@@ -38,10 +38,12 @@ let errorMsg="";
 let chances = 8;
 let wrongChoice="";
 let apple=0;
-let correctWord=""
+let correctWord="";
+let word="";
 // correctWord.length = wordLetters.length;
 for(i=0; i<wordLetters.length; i++){
 correctedWord.push("_")};
+
 app.post('/',function(request, response){
   console.log('where are we?');
 
@@ -51,6 +53,7 @@ letters.push(guessedLetter);
   //   correctedWord[i]="_";
   // }
 
+
   for(i=0; i<wordLetters.length; i++){
   if (guessedLetter.split("").length>1){
     errorMsg = "please enter only one letter";
@@ -58,10 +61,14 @@ letters.push(guessedLetter);
   if (guessedLetter === wordLetters[i]){
 
     correctedWord[i] = guessedLetter;
+
     // correctWord.splice(i, 0, correctedWord[i]);
   }
 
   }
+
+
+  console.log(word);
   console.log (correctedWord);
   console.log (wordLetters);
   console.log(guessedLetter);
@@ -73,7 +80,7 @@ letters.push(guessedLetter);
       wrongChoice="";
 
   } else{
-     wrongChoice="Guess Again!";
+     wrongChoice="WRONG!";
      chances--;
 
     console.log(wrongChoice);
@@ -90,9 +97,8 @@ letters.push(guessedLetter);
 if (chances ===0 ){
   wrongChoice="GAME OVER!"
   correctWord=currentWord;
-}else if (correctedWord == wordLetters){
-  wrongChoice="YOU WIN!";
-}
+  response.render('gameover',{words, letters, correctedWord, currentWord, errorMsg, wrongChoice, chances,correctWord})
+}else{
 // for(i=0; i<correctedWord.length; i++){
 // if( correctedWord[i] === wordLetters[i]){
 //   return apple ++;
@@ -120,9 +126,31 @@ if (chances ===0 ){
   // console.log(request.body)
   // response.render('game', {words, currentWord, correctWord});
 
+  // if (correctedWord !== wordLetters){
+  //   wrongChoice="";
+  // }else {
+  //   wrongChoice="YOU WIN!"
+  // }
+ //  for(i=0; i<correctedWord.length; i++){
+ //    if( correctedWord[i]===wordLetters[i]) {
+ //      console.log('win!');
+ //      word++;
+ //    }else{
+ //      console.log("no match")
+ //    }
+ //  }
+ // if (word === wordLetters.lenght){
+ //   wrongChoice="YOU WIN!"
+ // }
+ let similar = correctedWord.every(function(element, i) {
+     return element === wordLetters[i];
+ });
+ //
+   if(similar){
+     wrongChoice="YOU WIN!"
+   }
+    response.redirect('/');}
 
-//
-    response.redirect('/');
  // response.render('game', {words, currentWord, correctWord});
 });
 // let completedTodo = todoList.find(function(todo){
@@ -135,11 +163,35 @@ app.get('/', function(request, response){
   console.log (wordLetters);
   });
 
-  app.get('/gameover', function(request, response){
-    request.session.destroy();
-    response.render('gameover')
-  })
 
+
+
+  app.post('/tryagain', function(request, response){
+    let gameover= request.body.button;
+    if (gameover===""){
+     currentWord = words[Math.floor(Math.random() * words.length)];
+     wordLetters=currentWord.split("");//split word into letters
+     correctedWord=[];
+     letters=[];
+     errorMsg="";
+     chances = 8;
+     wrongChoice="";
+     apple=0;
+     correctWord=""
+
+     for(i=0; i<wordLetters.length; i++){
+     correctedWord.push("_")};
+
+    }
+    response.redirect('/')
+  });
+
+  app.get('/', function(request, response){
+    response.render('game', {words, letters, correctedWord, currentWord, errorMsg, wrongChoice, chances,correctWord});
+    console.log(currentWord)
+    // console.log (correctWord);
+    console.log (wordLetters);
+    });
 
 
 
