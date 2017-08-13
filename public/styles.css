@@ -45,5 +45,11 @@ button{
 }
 .guessed{
   padding: 20px;
-  
+
+}
+.wrong-choice{
+  text-transform: uppercase;
+  color : orange;
+  font-size: xx-large;
+  padding:15px;
 }
