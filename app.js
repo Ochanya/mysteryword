@@ -39,7 +39,7 @@ let wrongChoice="";
 let apple=0;
 let correctWord="";
 let word=0;
-let a= ""
+
 
 for(i=0; i<wordLetters.length; i++){
 correctedWord.push("_")};
@@ -49,35 +49,6 @@ app.post('/',function(request, response){
 
 
 let guessedLetter= request.body.guessInput;
-
-
-
-
-
-// letters.push(guessedLetter);
-// letters.forEach(function(element){
-//   if (guessedLetter===element){
-//     word++
-//     console.log(word);
-//   }
-// })
-// correctedWord.forEach(function(element){
-//    a += element;
-// })
-// if (a === currentWord){
-//   wrongChoice="YOU WIN!"
-// }
-// console.log(a)
-// letters.forEach(function(element){
-//   if (guessedLetter === element){
-//      letters.splice(element, 1);
-//   }
-// })
-// for(var i = letters.length - 1; i >= 0; i--) {
-//     if(array[i] === guessedLetter) {
-//        letters.splice(i, 1);
-//     }
-// }
 
   for(i=0; i<wordLetters.length; i++){
   if (guessedLetter.split("").length>1){
@@ -95,61 +66,26 @@ let guessedLetter= request.body.guessInput;
   if ( letters.includes(request.body.guessInput) === false){
       letters.push(request.body.guessInput)
     }
-  //  } else{
-  //    wrongChoice="";
 
-         // letters.push(request.body.guessInput);
+if (chances === 0 ){
+  // wrongChoice="GAME OVER!"
+  correctWord=currentWord;
 
+response.render('gameover',{ letters, correctedWord, currentWord, errorMsg, wrongChoice, chances,correctWord})
+}else{
 
-
-
-if (chances ===0 ){
-  wrongChoice="GAME OVER!"
-
-
-  response.render('gameover',{ letters, correctedWord, currentWord, errorMsg, wrongChoice, chances,correctWord})
-}
-
-
-
-   correctedWord.forEach(function(element){
-      a += element;
-
-   })
-     console.log(a)
-   if (a === currentWord){
-     wrongChoice="YOU WIN!"
-   }
+let a= ""
+correctedWord.forEach(function(element){
+  a += element;
+ if (a === currentWord){
+   wrongChoice="YOU WIN!"
+ }
+ console.log(a)
+});
 
 
-
-  //  wordLetters.forEach(function(element){
-  //  if (element !== guessedLetter ){
-  //    chances--;
-  //    wrongChoice="WRONG!";
-  //  }
-  //  })
-
-  //  if (request.body.guessInput.split('').length === 1 && letters.includes(request.body.guessInput) === true ){
-  //   word++
-  //  }else{
-   //
-   //
-  //     letters.push(request.body.guessInput);
-  //     chances -=1;
-     //  console.log(request.body.letterInput.split(''));
-
-    // if (letters.push(request.body.guessInput)===true){
-    //   chances --;
-    //   wrongChoice="WRONG!";
-    // }
-  //  for (i=0; i<letters.length; i++){
-  //    if (guessedLetter === letters[i]){
-  //      chances++;
-  //    }
-  //  }
     response.redirect('/')
-
+}
 });
 
 app.get('/', function(request, response){
