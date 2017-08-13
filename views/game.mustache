@@ -39,8 +39,13 @@
         {{.}}
       </span>
       {{/letters}}
-
-
+      {{#word}}
+      <form class="guessed" action="/tryagain" method="post">
+        <button type="submit" name="button" value="">PLAY AGAIN!</button>
+      </form>
+      {{/word}}
+      {{^word}}
+      {{/word}}
     </div>
 
   </body>
